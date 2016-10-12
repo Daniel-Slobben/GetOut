@@ -12,6 +12,7 @@ package
 		
 		private var character:Character;
 		private var worldSize:Array;
+		private var roomMap:Object;
 		
 		public function Game() 
 		{
@@ -30,26 +31,17 @@ package
 			
 			initializeConsole();
 			trace("Done!");
-			
-			
-			
-			startGame();
 		}
 		
 		private function initializeConsole():void 
 		{
-			console = new Console();
+			console = new Console(character);
 			Main.stage.addChild(console);
-		}
-		
-		private function startGame():void 
-		{
-			
 		}
 		
 		private function initializeCharacter():void 
 		{
-			character = new Character(worldSize);
+			character = new Character(worldSize, roomMap);
 		}
 		
 		private function initializeWorld():void 
@@ -57,6 +49,7 @@ package
 			var worldGenerator:WorldGenerator = new WorldGenerator();
 			worldSize = [7, 7];
 			worldGenerator.generate(worldSize);
+			roomMap = worldGenerator.getRoomMap();
 		}
 		
 	}
