@@ -14,11 +14,13 @@ package
 		private var game:Game;
 		private var health:int;
 		private var map:Array;
+		private var worldSize:Array;
 		
 		public function Character(worldSize:Array, roomMap:Object) 
 		{
 			trace("Creating character!");
 			this.roomMap = roomMap;
+			this.worldSize = worldSize;
 			
 			health = maxHealth;
 			location = [Math.ceil(worldSize[0] / 2), Math.ceil(worldSize[1] / 2)];
@@ -31,25 +33,41 @@ package
 		
 		public function go(direction:String):void
 		{
+			// hmm, desiredLocation only stored a reference of location. Quick hack to fix it
+			
+			var desiredLocation:Array = [location[0], location[1]];
 			if (direction == "north")
-			{				
-				location[0]--;	
-				traceLocation()
+			{
+				desiredLocation[0]--;
+				checkMovement(desiredLocation);				
 			}
 			else if (direction == "east")
 			{
-				location[1]++;
-				traceLocation()
+				desiredLocation[1]++;
+				checkMovement(desiredLocation);				
 			}
 			else if (direction == "south")
 			{
-				location[0]++;
-				traceLocation()
+				desiredLocation[0]++;
+				checkMovement(desiredLocation);
 			}
 			else if (direction == "west")
 			{
-				location[1]--;
-				traceLocation()
+				desiredLocation[1]--;
+				checkMovement(desiredLocation);
+			}
+		}
+		private function checkMovement(desiredLocation:Array):void
+		{
+			if (desiredLocation[0] > -1 && desiredLocation[0] < worldSize[0] && desiredLocation[1] > -1 && desiredLocation[1] < worldSize[1])
+			{
+				location = desiredLocation;
+				traceLocation();
+				desiredLocation = null;
+			}
+			else
+			{
+				trace("cant allow this movement");
 			}
 		}
 		
