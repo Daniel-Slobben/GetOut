@@ -121,7 +121,7 @@ package
 		 * The reason this for loop starts at -1
 		 * is so that you can do things like
 		 * {x + j, y} to easily get the coordinates
-		 * of neighboor cells.
+		 * of neighboor cells
 		 * @param	x coordinates of the cell we want to check
 		 * @param	y coordinates of the cell we want to check
 		 * @return The amount of alive cells next to it
