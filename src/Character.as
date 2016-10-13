@@ -26,31 +26,38 @@ package
 			currentLocation = roomMap[location[0] + "_" + location[1]];
 			
 			mapMaker(worldSize);
-			traceMap(worldSize);
+			//traceMap(worldSize);
 		}
 		
 		public function go(direction:String):void
 		{
 			if (direction == "north")
-			{
-				trace("Moved from: " + location[0] + " " + location[1]);
-				location[1]++;
-				currentLocation = roomMap[location[0] + "_" + location[1]];
-				trace("To location: " + location[0] + " " + location[1]);
-				
+			{				
+				location[0]--;	
+				traceLocation()
 			}
 			else if (direction == "east")
 			{
-				location[0]++;
+				location[1]++;
+				traceLocation()
 			}
 			else if (direction == "south")
 			{
-				location[1]--;
+				location[0]++;
+				traceLocation()
 			}
 			else if (direction == "west")
 			{
-				location[0]--;
+				location[1]--;
+				traceLocation()
 			}
+		}
+		
+		private function traceLocation():void
+		{			
+			currentLocation = roomMap[location[0] + "_" + location[1]];
+			trace("Current location: " + location[0] + " " + location[1]);
+			trace("You are now in a " + currentLocation.getEnvironment());
 		}
 		
 		private function mapMaker(worldSize:Array):void 

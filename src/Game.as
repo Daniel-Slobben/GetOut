@@ -26,10 +26,10 @@ package
 			initializeWorld();			
 			trace("World generation is done!");
 			
-			//initializeCharacter();
+			initializeCharacter();
 			trace("Character creation is done!");
 			
-			//initializeConsole();
+			initializeConsole();
 			trace("Done!");
 		}
 		
@@ -45,13 +45,17 @@ package
 		}
 		
 		private function initializeWorld():void 
-		{			
-			var worldGenerator:WorldGenerator = new WorldGenerator();
+		{						
 			worldSize = [20, 20];
-			worldGenerator.generate(worldSize);
+			var worldGenerator:WorldGenerator = new WorldGenerator(worldSize);
 			roomMap = worldGenerator.getRoomMap();
-			worldGenerator.createBaseMap(worldSize);
-			worldGenerator.traceMap(worldSize);
+			worldGenerator.createBaseMap();
+			for (var i:int = 0; i < 10; i++ )
+			{
+				worldGenerator.simulateStep();
+			}			
+			worldGenerator.generate();
+			worldGenerator.traceMap();
 		}
 		
 	}

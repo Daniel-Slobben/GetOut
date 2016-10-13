@@ -8,13 +8,18 @@ package
 	{
 		private var roomMap:Object;
 		private var map:Array;
+		private var deathLimit:int = 3;
+		private var birthLimit:int = 4;
+		private var worldSize:Array;
+		private var chanceOfLife:Number = 0.4;
 		
 		/**
 		 * Constructor for the world generator
 		 */
-		public function WorldGenerator() 
+		public function WorldGenerator(worldSize:Array) 
 		{
 			roomMap = new Object();
+			this.worldSize = worldSize;
 			
 		}
 		
@@ -23,18 +28,24 @@ package
 		 * @param	worldSize
 		 */
 		
-		public function generate(worldSize:Array):void 
+		public function generate():void 
 		{
-			var i:int;
-			var j:int;
 			trace("I am in the world generation now!");
-			for (i = 0; i < worldSize[0]; i++) 
+			for (var i:int = 0; i < worldSize[0]; i++) 
 			{
 				trace("Loading: " + i);
-				for (j = 0; j < worldSize[1]; j++) 
+				for (var j:int = 0; j < worldSize[1]; j++) 
 				{									
 					var locationArray:Array = [i, j];
-					roomMap[i + "_" + j] = new Room(locationArray);	
+					if (map[i][j])
+					{
+						roomMap[i + "_" + j] = new Room(locationArray, "Desert");	
+					}
+					else 
+					{
+						roomMap[i + "_" + j] = new Room(locationArray, "Forest");	
+					}
+					
 				}
 			}
 		}
@@ -43,11 +54,11 @@ package
 			return roomMap;
 		}
 		
-		public function createBaseMap(worldSize:Array):void 
+		public function createBaseMap():void 
 		{						
 			var i:int;
 			var j:int;
-			var chanceOfLife:Number = 0.8;
+			
 			map = [];
 			for (i = 0; i < worldSize[0]; i++) 
 			{
@@ -55,7 +66,6 @@ package
 				for (j = 0; j < worldSize[1]; j++) 
 				{							
 					var randomNumber:Number = Math.random();
-					// About an 80 percent chance a point in the map will be false
 					if (randomNumber > chanceOfLife)
 					{
 						map [i][j] = false;
@@ -70,7 +80,40 @@ package
 		
 		public function simulateStep():void
 		{
-			
+			var newMap:Array = createEmptyMap();
+			for (var i:int = 0; i < worldSize[0]; i++) 
+			{
+				for (var j:int = 0; j < worldSize[1]; j++) 
+				{	
+					var aliveNeighbours:int = countAliveNeighbours(i, j);
+					
+					// rules for alive cells
+					if (map[i][j])
+					{
+						if (aliveNeighbours < deathLimit)
+						{
+							newMap[i][j] = false;
+						}
+						else
+						{
+							newMap[i][j] = true;
+						}
+					}
+					// rules for dead cells
+					else
+					{
+						if (aliveNeighbours > birthLimit)
+						{
+							newMap[i][j] = true;
+						}
+						else
+						{
+							newMap[i][j] = false;
+						}
+					}
+				}
+			}
+			map = newMap;
 		}
 		/**
 		 * Thanks to gamedevelopment.tutsplus.com
@@ -112,7 +155,7 @@ package
 			return count;
 		}
 		
-		public function traceMap(worldSize:Array):void
+		public function traceMap():void
 		{
 			var i:int;
 			var j:int;
@@ -134,6 +177,27 @@ package
 				output = "";
 			}
 			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0));
+		}
+		/**
+		 * ActionScript doesnt let me do boolean[][]
+		 * So i created a function to do it for me;
+		 * @param	worldSize
+		 */
+		private function createEmptyMap():Array 
+		{			
+			var newMap:Array;
+			var i:int;
+			var j:int;
+			newMap = [];
+			for (i = 0; i < worldSize[0]; i++) 
+			{
+				newMap [i] = [];
+				for (j = 0; j < worldSize[1]; j++) 
+				{									
+					newMap [i][j] = false;
+				}
+			}
+			return newMap;			
 		}
 	}
 }
