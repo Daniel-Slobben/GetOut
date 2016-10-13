@@ -14,6 +14,12 @@ package
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
  
+		
+		/**
+		 * this entire class needs to be better
+		 * sadly i am not too good with GUI stuff. 
+		 * @param	player
+		 */
         public function Console(player:Character) 
         { 
 			this.player = player;
@@ -50,12 +56,10 @@ package
 				{
 					var goCommand:GoCommand = new GoCommand();
 					goCommand.execute(arrayMessage[1], player);
-				}
-				
-			}
-           
+				}				
+			}           
         } 
-             
+		
         public function createOutputBox(defaultStringOutput:String):void 
         { 
             outputField.background = false; 

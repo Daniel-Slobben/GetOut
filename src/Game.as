@@ -14,11 +14,17 @@ package
 		private var worldSize:Array;
 		private var roomMap:Object;
 		
+		/**
+		 * Empty constructor
+		 */
 		public function Game() 
 		{
 			
 		}
 		
+		/**
+		 * Function for initializing the game.
+		 */
 		public function initialize(  ):void 
 		{
 			trace("Starting init...");
@@ -44,6 +50,11 @@ package
 			player = new Player(worldSize, roomMap);
 		}
 		
+		/**
+		 * Method for initializing the game world
+		 * Some responsibilities of this method could/should
+		 * be handed over to worldGenerator.as
+		 */
 		private function initializeWorld():void 
 		{						
 			worldSize = [20, 20];

@@ -16,6 +16,13 @@ package
 		private var map:Array;
 		private var worldSize:Array;
 		
+		/**
+		 * Constructor for the character superclass.
+		 * some of these functions still need to be handed over
+		 * to the subclasses
+		 * @param	worldSize
+		 * @param	roomMap
+		 */
 		public function Character(worldSize:Array, roomMap:Object) 
 		{
 			trace("Creating character!");
@@ -31,6 +38,10 @@ package
 			//traceMap(worldSize);
 		}
 		
+		/**
+		 * Method that gets called by the goCommand
+		 * @param	direction The direction the character will be moving
+		 */
 		public function go(direction:String):void
 		{
 			// desiredLocation only stored a reference of location. Quick hack to fix it
@@ -57,6 +68,12 @@ package
 				checkMovement(desiredLocation);
 			}
 		}
+		
+		/**
+		 * Method that checks if the movement is allowed
+		 * Does the actual movement.
+		 * @param	desiredLocation
+		 */
 		private function checkMovement(desiredLocation:Array):void
 		{
 			if (desiredLocation[0] > -1 && desiredLocation[0] < worldSize[0] && desiredLocation[1] > -1 && desiredLocation[1] < worldSize[1])
@@ -70,6 +87,9 @@ package
 			}
 		}
 		
+		/**
+		 * traces the location and the current room to the output
+		 */
 		private function traceLocation():void
 		{			
 			currentLocation = roomMap[location[0] + "_" + location[1]];
@@ -77,6 +97,11 @@ package
 			trace("You are now in a " + currentLocation.getEnvironment());
 		}
 		
+		/**
+		 * makes an empty map. This method is also used in worldGenerator.
+		 * Should probably just make this a static method somewhere. 
+		 * @param	worldSize
+		 */
 		private function mapMaker(worldSize:Array):void 
 		{			
 			var i:int;
@@ -92,6 +117,10 @@ package
 			}
 			
 		}
+		/**
+		 * Traces the entire map of this character to the output
+		 * @param	worldSize
+		 */
 		public function traceMap(worldSize:Array):void
 		{
 			var i:int;
