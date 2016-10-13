@@ -10,7 +10,7 @@ package
 		
 		private var console:Console;
 		
-		private var character:Character;
+		private var player:Player;
 		private var worldSize:Array;
 		private var roomMap:Object;
 		
@@ -35,13 +35,13 @@ package
 		
 		private function initializeConsole():void 
 		{
-			console = new Console(character);
+			console = new Console(player);
 			Main.stage.addChild(console);
 		}
 		
 		private function initializeCharacter():void 
 		{
-			character = new Character(worldSize, roomMap);
+			player = new Player(worldSize, roomMap);
 		}
 		
 		private function initializeWorld():void 

@@ -33,8 +33,8 @@ package
 		
 		public function go(direction:String):void
 		{
-			// hmm, desiredLocation only stored a reference of location. Quick hack to fix it
-			
+			// desiredLocation only stored a reference of location. Quick hack to fix it
+			// Is there a better way to force this? 
 			var desiredLocation:Array = [location[0], location[1]];
 			if (direction == "north")
 			{
@@ -63,7 +63,6 @@ package
 			{
 				location = desiredLocation;
 				traceLocation();
-				desiredLocation = null;
 			}
 			else
 			{
