@@ -13,6 +13,11 @@ package
 			
 		}
 		
+		public function action():void
+		{
+			trace("Should be doing ai thingies");
+		}
+		
 	}
 
 }

@@ -14,6 +14,8 @@ package
 		private var worldSize:Array;
 		private var roomMap:Object;
 		
+		private var enemies:Array;
+		
 		/**
 		 * Empty constructor
 		 */
@@ -37,11 +39,35 @@ package
 			
 			initializeConsole();
 			trace("Done!");
+			
+			initializeEnemies();
+			
+			Console.writeOutput("Reach to end of the map to win.");
+			Console.writeOutput("Welcome to GetOut!");
+			
+		}
+		
+		public function moveEnemies():void
+		{
+			for each (var enemy:Enemy in enemies)
+			{
+				enemy.action();
+			}
+		}
+		
+		private function initializeEnemies():void 
+		{
+			
+			var enemy1:Enemy = new Enemy(worldSize, roomMap);
+			var enemy2:Enemy = new Enemy(worldSize, roomMap);
+			var enemy3:Enemy = new Enemy(worldSize, roomMap);
+			
+			enemies = [enemy1, enemy2, enemy3];			
 		}
 		
 		private function initializeConsole():void 
 		{
-			console = new Console(player);
+			console = new Console(player, this);
 			Main.stage.addChild(console);
 		}
 		

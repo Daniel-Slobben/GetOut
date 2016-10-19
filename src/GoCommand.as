@@ -4,7 +4,7 @@ package
 	 * ...
 	 * @author ...
 	 */
-	public class GoCommand extends Command 
+	public class GoCommand implements Command 
 	{
 		
 		public function GoCommand() 
@@ -12,9 +12,9 @@ package
 			super();			
 		}
 		
-		override public function execute(direction:String, actor:Character):void
+		public function execute(direction:String, actor:Character):Boolean
 		{
-			actor.go(direction);
+			return actor.go(direction);
 		}
 		
 		

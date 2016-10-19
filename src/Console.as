@@ -13,6 +13,7 @@ package
         private static var outputField:TextField = new TextField();
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
+		private var game:Game;
 		
 		private static var log:Array = new Array();
  
@@ -22,8 +23,9 @@ package
 		 * sadly i am not too good with GUI stuff. 
 		 * @param	player
 		 */
-        public function Console(player:Character) 
+        public function Console(player:Character, game:Game) 
         { 
+			this.game = game;
 			this.player = player;
             captureText();
 			createOutputBox(defaultStringOutput);
@@ -54,17 +56,26 @@ package
 				// Splitting the message into an array. 
 				var arrayMessage:Array = message.split(" ");
 				
+				var moved:Boolean = false;
+				
 				switch (arrayMessage[0])
 				{
 					case "go" :
 					{
 						var goCommand:GoCommand = new GoCommand();
-						goCommand.execute(arrayMessage[1], player);
+						if (!goCommand.execute(arrayMessage[1], player))
+						{
+							Console.writeOutput("I don't know where to go.");
+						}
+						else 
+						{
+							game.moveEnemies();
+						}
 						break;
 					}
 					default :
 					{
-						writeOutput("I don't know what you mean.")
+						writeOutput("I don't know what you mean.");
 					}
 					
 				}				

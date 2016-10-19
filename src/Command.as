@@ -4,18 +4,12 @@ package
 	 * ...
 	 * @author ...
 	 */
-	public class Command 
+	public interface Command 
 	{
 		
-		public function Command() 
-		{
-			
-		}
+		public function Command()
 		
-		public function execute(info:String, actor:Character):void
-		{
-			
-		}
+		function execute(info:String, actor:Character):Boolean
 		
 	}
 

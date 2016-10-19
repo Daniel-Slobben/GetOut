@@ -39,9 +39,9 @@ package
 		 * Method that gets called by the goCommand
 		 * @param	direction The direction the character will be moving
 		 */
-		public function go(direction:String):void
+		public function go(direction:String):Boolean
 		{
-			// desiredLocation only stored a reference of location. Quick hack to fix it
+			// desiredLocation only stored a reference of location.
 			// Is there a better way to force this? 
 			var desiredLocation:Array = [location[0], location[1]];
 			if (direction == "north")
@@ -64,6 +64,12 @@ package
 				desiredLocation[1]--;
 				move(desiredLocation);
 			}
+			else 
+			{
+				return false;
+			}
+			return true;
+			
 		}
 		
 		/**
