@@ -10,9 +10,11 @@ package
     { 
 		private var player:Character;
         private var inputField:TextField = new TextField(); 
-        private var outputField:TextField = new TextField();
+        private static var outputField:TextField = new TextField();
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
+		
+		private static var log:Array = new Array();
  
 		
 		/**
@@ -32,6 +34,7 @@ package
             inputField.type = TextFieldType.INPUT; 
 			inputField.border = true;
 			inputField.borderColor = 0x000000;
+			inputField.width = 500;
             inputField.background = false; 
             addChild(inputField); 
             inputField.text = defaultString;
@@ -45,27 +48,47 @@ package
 			if (event.charCode == 13)
 			{
 				var message:String = inputField.text; 
-				outputField.text = message;
 				inputField.text = "";		
 				message = message.toLowerCase();
 				
 				// Splitting the message into an array. 
 				var arrayMessage:Array = message.split(" ");
 				
-				if (arrayMessage[0] == "go")
+				switch (arrayMessage[0])
 				{
-					var goCommand:GoCommand = new GoCommand();
-					goCommand.execute(arrayMessage[1], player);
+					case "go" :
+					{
+						var goCommand:GoCommand = new GoCommand();
+						goCommand.execute(arrayMessage[1], player);
+						break;
+					}
+					default :
+					{
+						writeOutput("I don't know what you mean.")
+					}
+					
 				}				
 			}           
         } 
 		
+		public static function writeOutput(message:String):void
+		{
+			log.unshift(message);
+			
+			// lets make a multiline string to output
+			// this string will contain the first 15 strings in the log
+			var output:String = log.join("\n");
+			outputField.text = output;
+		}
+		
         public function createOutputBox(defaultStringOutput:String):void 
         { 
-            outputField.background = false; 
-            outputField.y = 200;
+            outputField.background = true; 
+            outputField.y = 130;
+			outputField.width = 500;
+			outputField.height = 300;
 			outputField.border = true;
-			outputField.borderColor = 0xFFFFFF;
+			outputField.borderColor = 0x000000;
 			outputField.multiline = true;
             addChild(outputField); 
             outputField.text = defaultStringOutput; 

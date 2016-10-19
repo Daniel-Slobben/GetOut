@@ -6,15 +6,15 @@ package
 	 */
 	public class Character 
 	{
-		private var location:Array;
+		protected var location:Array;
 		
-		private const maxHealth:int = 100;
-		private var currentLocation:Room;
-		private var roomMap:Object;
-		private var game:Game;
-		private var health:int;
-		private var map:Array;
-		private var worldSize:Array;
+		protected const maxHealth:int = 100;
+		protected var currentLocation:Room;
+		protected var roomMap:Object;
+		protected var game:Game;
+		protected var health:int;
+		protected var map:Array;
+		protected var worldSize:Array;
 		
 		/**
 		 * Constructor for the character superclass.
@@ -29,10 +29,7 @@ package
 			this.roomMap = roomMap;
 			this.worldSize = worldSize;
 			
-			health = maxHealth;
-			location = [Math.ceil(worldSize[0] / 2), Math.ceil(worldSize[1] / 2)];
-			trace("character is at: " + location);
-			currentLocation = roomMap[location[0] + "_" + location[1]];
+			health = maxHealth;			
 			
 			mapMaker(worldSize);
 			//traceMap(worldSize);
@@ -50,22 +47,22 @@ package
 			if (direction == "north")
 			{
 				desiredLocation[0]--;
-				checkMovement(desiredLocation);				
+				move(desiredLocation);				
 			}
 			else if (direction == "east")
 			{
 				desiredLocation[1]++;
-				checkMovement(desiredLocation);				
+				move(desiredLocation);				
 			}
 			else if (direction == "south")
 			{
 				desiredLocation[0]++;
-				checkMovement(desiredLocation);
+				move(desiredLocation);
 			}
 			else if (direction == "west")
 			{
 				desiredLocation[1]--;
-				checkMovement(desiredLocation);
+				move(desiredLocation);
 			}
 		}
 		
@@ -74,16 +71,22 @@ package
 		 * Does the actual movement.
 		 * @param	desiredLocation
 		 */
-		private function checkMovement(desiredLocation:Array):void
+		private function move(desiredLocation:Array):void
 		{
 			if (desiredLocation[0] > -1 && desiredLocation[0] < worldSize[0] && desiredLocation[1] > -1 && desiredLocation[1] < worldSize[1])
 			{
 				location = desiredLocation;
-				traceLocation();
+				if (this is Player) 
+				{
+					traceLocation();
+				}				
 			}
 			else
 			{
-				trace("cant allow this movement");
+				if (this is Player) 
+				{
+					Console.writeOutput("Congratz, you won the game!")
+				}		
 			}
 		}
 		
@@ -94,7 +97,7 @@ package
 		{			
 			currentLocation = roomMap[location[0] + "_" + location[1]];
 			trace("Current location: " + location[0] + " " + location[1]);
-			trace("You are now in a " + currentLocation.getEnvironment());
+			Console.writeOutput("You are now in a " + currentLocation.getEnvironment());
 		}
 		
 		/**
