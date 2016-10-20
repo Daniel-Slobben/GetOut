@@ -35,15 +35,16 @@ package
 			{
 				trace("Loading: " + i);
 				for (var j:int = 0; j < worldSize[1]; j++) 
-				{									
+				{
+					var features:int = countAliveNeighbours(i, j, -2);
 					var locationArray:Array = [i, j];
 					if (map[i][j])
 					{
-						roomMap[i + "_" + j] = new Room(locationArray, "Desert");	
+						roomMap[i + "_" + j] = new Room(locationArray, "Desert", features);	
 					}
 					else 
 					{
-						roomMap[i + "_" + j] = new Room(locationArray, "Forest");	
+						roomMap[i + "_" + j] = new Room(locationArray, "Forest", features);	
 					}
 					
 				}
@@ -85,7 +86,7 @@ package
 			{
 				for (var j:int = 0; j < worldSize[1]; j++) 
 				{	
-					var aliveNeighbours:int = countAliveNeighbours(i, j);
+					var aliveNeighbours:int = countAliveNeighbours(i, j, -1);
 					
 					// rules for alive cells
 					if (map[i][j])
@@ -118,7 +119,7 @@ package
 		/**
 		 * Thanks to gamedevelopment.tutsplus.com
 		 * for this elegant solution.
-		 * The reason this for loop starts at -1
+		 * The reason this for loop starts at -1 for the direct neighbours
 		 * is so that you can do things like
 		 * {x + j, y} to easily get the coordinates
 		 * of neighboor cells
@@ -126,12 +127,12 @@ package
 		 * @param	y coordinates of the cell we want to check
 		 * @return The amount of alive cells next to it
 		 */
-		private function countAliveNeighbours(x:int, y:int):int
+		private function countAliveNeighbours(x:int, y:int, loopStart:int):int
 		{
 			var count:int = 0;
-			for (var i:int = -1; i < 2; i++)
+			for (var i:int = loopStart; i < 2; i++)
 			{
-				for (var j:int = -1; j < 2; j++)
+				for (var j:int = loopStart; j < 2; j++)
 				{
 					var neighbour_x:int = x + i;
 					var neighbour_y:int = y + j;
@@ -176,7 +177,7 @@ package
 				trace(output);
 				output = "";
 			}
-			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0));
+			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0, -1));
 		}
 		/**
 		 * ActionScript doesnt let me do boolean[][]
