@@ -7,8 +7,8 @@ package
 	public class HealthPack extends Item 
 	{
 		private var player:Player;
-		final private var healthToAdd:int = 20;
-		final private var name:String = "health pack";
+		private var healthToAdd:int = 20;
+		private var name:String = "health pack";
 		
 		public function HealthPack(player:Player)		
 		{

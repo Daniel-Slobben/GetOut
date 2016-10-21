@@ -31,7 +31,9 @@ package
 			this.roomMap = roomMap;
 			this.worldSize = worldSize;
 			
-			health = maxHealth;			
+			health = maxHealth;		
+			
+			
 			
 			mapMaker(worldSize);
 			//traceMap(worldSize);
@@ -44,6 +46,25 @@ package
 		public function addHealth(healthToAdd:int):void
 		{
 			health += healthToAdd;
+			Console.writeOutput("you now have " + health + " Health.");
+		}
+		
+		/**
+		 * uses the item if it exists
+		 * @param	itemToUse
+		 */
+		public function useItem(itemToUse:String):Boolean
+		{
+			for each (var item:Item in items)
+			{
+				if ( item.getName() == itemToUse )
+				{
+					item.trigger();
+					deleteItem(item);
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		/**

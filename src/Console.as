@@ -57,7 +57,7 @@ package
 				var arrayMessage:Array = message.split(" ");
 				var arrayMessageInfo:Array = message.split(" ");
 				arrayMessageInfo.removeAt(0);
-				var messageInfo:String = arrayMessageInfo.join();
+				var messageInfo:String = arrayMessageInfo.join(" ");
 				
 				var moved:Boolean = false;
 				
@@ -73,6 +73,16 @@ package
 						else 
 						{
 							game.moveEnemies();
+						}
+						break;
+					}
+					case "use":
+					{
+						var itemCommand:Command = new ItemCommand();
+						trace(messageInfo);
+						if (!itemCommand.execute(messageInfo, player))
+						{
+							Console.writeOutput("I dont have that item.");
 						}
 						break;
 					}

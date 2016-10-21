@@ -17,7 +17,7 @@ package
 		
 		public function execute(info:String, actor:Character):Boolean 
 		{
-			
+			return actor.useItem(info);
 		}
 		
 	}
