@@ -10,6 +10,8 @@ package
 		private var environment:String;
 		private var features:int;
 		
+		private var item:Item;
+		
 		private var poisonLevel:int = 0;
 		
 		public function Room(location:Array, environment:String, features:int) 
@@ -24,12 +26,38 @@ package
 		private function createFeatures():void 
 		{
 			setPoisonLevel();
-			setItems();
 		}
 		
-		private function setItems():void 
+		/**
+		 * Yes this is weirdly done
+		 * couldnt find another way to use Items without a reference to the player
+		 * @param	player
+		 */
+		public function setItems(player:Player):void 
 		{
-			
+			item = new HealthPack(player);
+		}
+		
+		public function checkItem():Boolean
+		{
+			if (item != null)
+			{
+				return true;
+			}
+			return false;
+		}
+		
+		public function removeItem():void
+		{
+			if (item != null)
+			{
+				item = null;
+			}
+		}
+		
+		public function getItem():Item
+		{
+			return item;
 		}
 		
 		private function setPoisonLevel():void

@@ -50,6 +50,17 @@ package
 				}
 			}
 		}
+		public function setItems(player:Player):void
+		{
+			for (var i:int = 0; i < worldSize[0]; i++) 
+			{
+				for (var j:int = 0; j < worldSize[1]; j++) 
+				{
+					roomMap[i + "_" + j].setItems(player);								
+				}
+			}
+		}
+		
 		public function getRoomMap():Object 
 		{
 			return roomMap;

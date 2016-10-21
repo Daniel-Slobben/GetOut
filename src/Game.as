@@ -14,6 +14,8 @@ package
 		private var worldSize:Array;
 		private var roomMap:Object;
 		
+		private var worldGenerator:WorldGenerator;
+		
 		private var enemies:Array;
 		
 		/**
@@ -74,6 +76,7 @@ package
 		private function initializeCharacter():void 
 		{
 			player = new Player(worldSize, roomMap);
+			worldGenerator.setItems(player);
 		}
 		
 		/**
@@ -84,7 +87,7 @@ package
 		private function initializeWorld():void 
 		{						
 			worldSize = [20, 20];
-			var worldGenerator:WorldGenerator = new WorldGenerator(worldSize);
+			worldGenerator = new WorldGenerator(worldSize);
 			roomMap = worldGenerator.getRoomMap();
 			worldGenerator.createBaseMap();
 			for (var i:int = 0; i < 10; i++ )

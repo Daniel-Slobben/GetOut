@@ -67,6 +67,18 @@ package
 			return false;
 		}
 		
+		public function getItem():Boolean
+		{
+			var item:Item = currentLocation.getItem();
+			if (item != null)
+			{
+				addItem(item);
+				Console.writeOutput("You have picked up: " + item.getName());
+				return true;
+			}
+			return false;
+		}
+		
 		/**
 		 * add Item to the list
 		 * @param	item to add;
@@ -153,7 +165,12 @@ package
 		{			
 			currentLocation = roomMap[location[0] + "_" + location[1]];
 			trace("Current location: " + location[0] + " " + location[1]);
-			Console.writeOutput("You are now in a " + currentLocation.getEnvironment());
+			if (currentLocation.checkItem())
+			{
+				Console.writeOutput("This room contains the item: " + currentLocation.getItem().getName());
+			}
+			Console.writeOutput("You are now in a " + currentLocation.getEnvironment());			
+			
 		}
 		
 		/**

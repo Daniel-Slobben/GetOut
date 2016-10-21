@@ -86,6 +86,22 @@ package
 						}
 						break;
 					}
+					case "get":
+					{
+						if (messageInfo == "item")
+						{
+							var getItemCommand:Command = new GetItemCommand();
+							if (!getItemCommand.execute(messageInfo, player))
+							{
+								Console.writeOutput("This room does not have an item.");
+							}
+						}
+						else 
+						{
+							Console.writeOutput("Get what?");
+						}
+						break;						
+					}
 					default :
 					{
 						writeOutput("I don't know what you mean.");
