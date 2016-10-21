@@ -17,6 +17,11 @@ package
 			
 		}
 		
+		public function getName():String
+		{
+			return null;
+		}
+		
 	}
 
 }

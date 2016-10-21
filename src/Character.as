@@ -16,6 +16,8 @@ package
 		protected var map:Array;
 		protected var worldSize:Array;
 		
+		protected var items:Array = new Array();
+		
 		/**
 		 * Constructor for the character superclass.
 		 * some of these functions still need to be handed over
@@ -33,6 +35,33 @@ package
 			
 			mapMaker(worldSize);
 			//traceMap(worldSize);
+		}
+		
+		/**
+		 * adds health to the player
+		 * @param
+		 */
+		public function addHealth(healthToAdd:int):void
+		{
+			health += healthToAdd;
+		}
+		
+		/**
+		 * add Item to the list
+		 * @param	item to add;
+		 */
+		public function addItem(itemToAdd:Item):void
+		{
+			items.push(itemToAdd);
+		}
+		
+		/**
+		 * remove item from items
+		 * @param	item to delete
+		 */
+		public function deleteItem(itemToDelete:Item):void
+		{
+			items.removeAt(items.indexOf(itemToDelete));
 		}
 		
 		/**

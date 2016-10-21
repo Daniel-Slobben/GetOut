@@ -55,15 +55,18 @@ package
 				
 				// Splitting the message into an array. 
 				var arrayMessage:Array = message.split(" ");
+				var arrayMessageInfo:Array = message.split(" ");
+				arrayMessageInfo.removeAt(0);
+				var messageInfo:String = arrayMessageInfo.join();
 				
 				var moved:Boolean = false;
 				
 				switch (arrayMessage[0])
 				{
-					case "go" :
+					case "go":
 					{
 						var goCommand:GoCommand = new GoCommand();
-						if (!goCommand.execute(arrayMessage[1], player))
+						if (!goCommand.execute(messageInfo, player))
 						{
 							Console.writeOutput("I don't know where to go.");
 						}
