@@ -30,13 +30,24 @@ package
 		}
 		
 		/**
-		 * Yes this is weirdly done
-		 * couldnt find another way to use Items without a reference to the player
+		 * makes certain items
 		 * @param	player
 		 */
 		public function setItems():void 
-		{
-			item = new HealthPack();
+		{			
+			if (features < 10)
+			{
+				var chance:Number = features;
+				// ex: if features = 4, chance = 0.7
+				// ex: if features = 8, chance = 0.3
+				chance = 1 - ((chance / 10) - 0.1);
+				
+				if (Math.random() < chance)
+				{
+					// This room is selected to spawn a health pack.
+					item = new HealthPack();
+				}				
+			}			
 		}
 		
 		public function checkItem():Boolean
@@ -65,17 +76,26 @@ package
 		{
 			if (features > 19)
 			{
-				poisonLevel = Math.floor(Math.random() * 40);
+				poisonLevel = Math.floor(Math.random() * 70);
 			}
 			else if (features > 14)
 			{
-				poisonLevel = Math.floor(Math.random() * 20);
+				poisonLevel = Math.floor(Math.random() * 30);
+			}
+			else if (features > 7)
+			{
+				poisonLevel = Math.floor(Math.random() * 10);
 			}
 		}
 		
+		/**
+		 * function should get called when a player moves to this room
+		 * @param	player
+		 */
 		public function trigger(player:Player):void
 		{
-			
+			// Trigger the poison first
+			player.addHealth(0 - poisonLevel);
 		}
 		
 		public function getLocation():Array 

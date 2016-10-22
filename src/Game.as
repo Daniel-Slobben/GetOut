@@ -95,6 +95,7 @@ package
 			}			
 			worldGenerator.generate();
 			worldGenerator.traceMap();
+			worldGenerator.traceFeatureMap();
 		}
 		
 	}

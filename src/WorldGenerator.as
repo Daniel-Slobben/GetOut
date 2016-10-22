@@ -131,9 +131,9 @@ package
 		private function countAliveNeighbours(x:int, y:int, loopStart:int):int
 		{
 			var count:int = 0;
-			for (var i:int = loopStart; i < 2; i++)
+			for (var i:int = loopStart; i < Math.abs(loopStart)+1; i++)
 			{
-				for (var j:int = loopStart; j < 2; j++)
+				for (var j:int = loopStart; j < Math.abs(loopStart)+1; j++)
 				{
 					var neighbour_x:int = x + i;
 					var neighbour_y:int = y + j;
@@ -155,6 +155,28 @@ package
 				}
 			}
 			return count;
+		}
+		
+		public function traceFeatureMap():void
+		{
+			var output:String = "";
+			for (var i:int = 0; i < worldSize[0]; i++) 
+			{
+				for (var j:int = 0; j < worldSize[1]; j++) 
+				{
+					if (roomMap[i + "_" + j].getFeatures() > 9)
+					{
+						output += " " + roomMap[i + "_" + j].getFeatures();
+					}
+					else 
+					{
+						output += " " + roomMap[i + "_" + j].getFeatures()+" ";
+					}
+				}
+				trace(output);
+				output = "";
+			}
+			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0, -1));
 		}
 		
 		public function traceMap():void
