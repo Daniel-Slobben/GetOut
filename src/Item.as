@@ -21,6 +21,10 @@ package
 		{
 			return null;
 		}
+		public function setOwner(owner:Character):void
+		{
+			
+		}
 		
 	}
 

@@ -13,7 +13,9 @@ package
 			location = [Math.ceil(worldSize[0] / 2), Math.ceil(worldSize[1] / 2)];
 			trace("character is at: " + location);
 			currentLocation = roomMap[location[0] + "_" + location[1]];
-			addItem(new HealthPack(this));
+			var healthPack:HealthPack = new HealthPack();
+			healthPack.setOwner(this);
+			addItem(healthPack);
 		}
 		
 	}

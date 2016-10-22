@@ -6,23 +6,26 @@ package
 	 */
 	public class HealthPack extends Item 
 	{
-		private var player:Player;
+		private var owner:Character;
 		private var healthToAdd:int = 20;
 		private var name:String = "health pack";
 		
-		public function HealthPack(player:Player)		
+		public function HealthPack()		
 		{
-			this.player = player;
 		}
 		
 		override public function trigger():void 
 		{
-			player.addHealth(healthToAdd);
+			owner.addHealth(healthToAdd);
 		}
 		
 		override public function getName():String
 		{
 			return name;
+		}
+		override public function setOwner(owner:Character):void
+		{
+			this.owner = owner;
 		}
 		
 	}

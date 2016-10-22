@@ -72,8 +72,10 @@ package
 			var item:Item = currentLocation.getItem();
 			if (item != null)
 			{
+				item.setOwner(this);
 				addItem(item);
 				Console.writeOutput("You have picked up: " + item.getName());
+				currentLocation.removeItem();
 				return true;
 			}
 			return false;

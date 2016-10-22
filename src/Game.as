@@ -76,7 +76,6 @@ package
 		private function initializeCharacter():void 
 		{
 			player = new Player(worldSize, roomMap);
-			worldGenerator.setItems(player);
 		}
 		
 		/**

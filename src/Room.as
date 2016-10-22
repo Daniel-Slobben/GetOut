@@ -26,6 +26,7 @@ package
 		private function createFeatures():void 
 		{
 			setPoisonLevel();
+			setItems();
 		}
 		
 		/**
@@ -33,9 +34,9 @@ package
 		 * couldnt find another way to use Items without a reference to the player
 		 * @param	player
 		 */
-		public function setItems(player:Player):void 
+		public function setItems():void 
 		{
-			item = new HealthPack(player);
+			item = new HealthPack();
 		}
 		
 		public function checkItem():Boolean
