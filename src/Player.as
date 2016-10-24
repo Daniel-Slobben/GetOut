@@ -18,6 +18,17 @@ package
 			addItem(healthPack);
 		}
 		
+		public function getInventory():String
+		{
+			var itemsString:String = "";
+			
+			for each (var item:Item in items)
+			{
+				itemsString += item.getName() + ", ";
+			}
+			return itemsString;
+		}
+		
 	}
 
 }

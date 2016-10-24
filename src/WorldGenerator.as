@@ -11,7 +11,7 @@ package
 		private var deathLimit:int = 3;
 		private var birthLimit:int = 4;
 		private var worldSize:Array;
-		private var chanceOfLife:Number = 0.4;
+		private var chanceOfLife:Number = 0.37;
 		
 		/**
 		 * Constructor for the world generator

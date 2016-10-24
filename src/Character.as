@@ -150,7 +150,6 @@ package
 				{
 					traceLocation();
 					currentLocation.trigger(Player(this));
-					Console.writeOutput("current health = now: " + health);
 				}				
 			}
 			else

@@ -8,12 +8,13 @@ package
  
     public class Console extends Sprite 
     { 
-		private var player:Character;
+		private var player:Player;
         private var inputField:TextField = new TextField(); 
         private static var outputField:TextField = new TextField();
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
 		private var game:Game;
+		private var availableCommands:Array = ["Go", "use <item>", "get item", "inventory", "help"];
 		
 		private static var log:Array = new Array();
  
@@ -23,7 +24,7 @@ package
 		 * sadly i am not too good with GUI stuff. 
 		 * @param	player
 		 */
-        public function Console(player:Character, game:Game) 
+        public function Console(player:Player, game:Game) 
         { 
 			this.game = game;
 			this.player = player;
@@ -102,12 +103,22 @@ package
 						}
 						break;						
 					}
+					case ("inventory"):
+					{
+						Console.writeOutput("The items in your inventory are: " + player.getInventory() );
+						break;
+					}
+					case ("help"):
+					{
+						Console.writeOutput("The commands are: "+availableCommands.join(", "));
+						break;
+					}
 					default :
 					{
 						writeOutput("I don't know what you mean.");
-					}
-					
-				}				
+					}					
+				}
+				Console.writeOutput("");
 			}           
         } 
 		

@@ -46,6 +46,7 @@ package
 			
 			Console.writeOutput("Reach to end of the map to win.");
 			Console.writeOutput("Welcome to GetOut!");
+			Console.writeOutput("");
 			
 		}
 		
