@@ -1,10 +1,11 @@
-package 
+package States 
 {
+	import States.State;
 	/**
 	 * ...
 	 * @author Slobben
 	 */
-	public class combatState implements State 
+	public class combatState implements States.State 
 	{
 		
 		public function combatState() 

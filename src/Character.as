@@ -1,5 +1,9 @@
 package 
 {
+	import States.State;
+	import States.lostState;
+	import States.winState;
+	import States.worldState;
 	/**
 	 * ...
 	 * @author Daniël
@@ -15,7 +19,7 @@ package
 		protected var health:int;
 		protected var map:Array;
 		protected var worldSize:Array;
-		protected var currentState:State;
+		protected var currentState:States.State;
 		
 		protected var items:Array = new Array();
 		
@@ -31,7 +35,7 @@ package
 			trace("Creating character!");
 			this.roomMap = roomMap;
 			this.worldSize = worldSize;
-			currentState = new worldState();
+			currentState = new States.worldState();
 			
 			health = maxHealth;		
 			
@@ -58,7 +62,7 @@ package
 			Console.writeOutput("You now have " + health + " Health.");
 			if (health < 0)
 			{
-				currentState = new lostState();
+				currentState = new States.lostState();
 				Console.writeOutput("You have lost the game.");
 			}
 		}
@@ -171,7 +175,7 @@ package
 				if (this is Player) 
 				{
 					Console.writeOutput("Congratz, you won the game!")
-					currentState = new winState();
+					currentState = new States.winState();
 				}		
 			}
 		}
@@ -231,7 +235,7 @@ package
 			}
 		}
 		
-		public function getCurrentState():State 
+		public function getCurrentState():States.State 
 		{
 			return currentState;
 		}

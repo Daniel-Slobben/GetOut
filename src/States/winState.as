@@ -1,15 +1,16 @@
-package 
+package States 
 {
 	import Commands.statCommand;
+	import States.State;
 	/**
 	 * ...
 	 * @author Slobben
 	 */
-	public class lostState implements State 
+	public class winState implements States.State 
 	{
-		private var availableCommands:Array = [new statCommand()];
+		private var availableCommands:Array = [new statCommand()]
 		
-		public function lostState() 
+		public function winState() 
 		{
 			
 		}

@@ -1,4 +1,4 @@
-package 
+package States 
 {
 	import Commands.GetItemCommand;
 	import Commands.GoCommand;
@@ -6,11 +6,12 @@ package
 	import Commands.helpCommand;
 	import Commands.inventoryCommand;
 	import Commands.statCommand;
+	import States.State;
 	/**
 	 * ...
 	 * @author Slobben
 	 */
-	public class worldState implements State 
+	public class worldState implements States.State 
 	{
 		private var availableCommands:Array = [new Commands.GoCommand(), new Commands.UseItemCommand, new Commands.GetItemCommand(), new Commands.inventoryCommand(), new Commands.helpCommand(), new statCommand()];
 		
