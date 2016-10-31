@@ -1,5 +1,6 @@
 package 
 {
+	import Commands.Command;
 	/**
 	 * ...
 	 * @author ...
@@ -20,15 +21,44 @@ package
 		
 		public function getInventory():String
 		{
-			var itemsString:String = "";
+			var itemString:String = "";
+			var loopCounter:int = 0;
 			
 			for each (var item:Item in items)
 			{
-				itemsString += item.getName() + ", ";
+				loopCounter++;
+				itemString += item.getName();
+				if (loopCounter != items.length)
+				{
+					itemString += ", ";
+				}
+				else 
+				{
+					itemString += ".";
+				}
 			}
-			return itemsString;
+			return itemString;
 		}
 		
+		public function getHelp():String
+		{
+			var commandArray:Array = currentState.getCommands();
+			var commandString:String = "";
+			var loopCounter:int = 0;
+			for each (var command:Command in commandArray)
+			{
+				loopCounter++;
+				commandString += command.getName();
+				if (loopCounter != commandArray.length)
+				{
+					commandString += ", ";
+				}
+				else 
+				{
+					commandString += ".";
+				}
+			}
+			return commandString
+		}	
 	}
-
 }

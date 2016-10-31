@@ -16,7 +16,7 @@ package
 		
 		private var worldGenerator:WorldGenerator;
 		
-		private var enemies:Array;
+		private static var enemies:Array;
 		
 		/**
 		 * Empty constructor
@@ -50,7 +50,7 @@ package
 			
 		}
 		
-		public function moveEnemies():void
+		public static function moveEnemies():void
 		{
 			for each (var enemy:Enemy in enemies)
 			{

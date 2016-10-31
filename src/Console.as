@@ -1,5 +1,9 @@
 package 
 { 
+	import Commands.Command;
+	import Commands.GetItemCommand;
+	import Commands.GoCommand;
+	import Commands.UseItemCommand;
 	import flash.display.SimpleButton;
     import flash.display.Sprite; 
     import flash.display.Stage;
@@ -14,7 +18,6 @@ package
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
 		private var game:Game;
-		private var availableCommands:Array = ["Go", "use <item>", "get item", "inventory", "help"];
 		
 		private static var log:Array = new Array();
  
@@ -62,63 +65,15 @@ package
 				
 				var moved:Boolean = false;
 				
-				switch (arrayMessage[0])
+				for each (var command:Command in player.getCurrentState().getCommands())
 				{
-					case "go":
+					if (arrayMessage[0] == command.getName())
 					{
-						var goCommand:GoCommand = new GoCommand();
-						if (!goCommand.execute(messageInfo, player))
-						{
-							Console.writeOutput("I don't know where to go.");
-						}
-						else 
-						{
-							game.moveEnemies();
-						}
-						break;
+						Console.writeOutput("");
+						Console.writeOutput(message);
+						command.execute(messageInfo, player);
 					}
-					case "use":
-					{
-						var itemCommand:Command = new ItemCommand();
-						trace(messageInfo);
-						if (!itemCommand.execute(messageInfo, player))
-						{
-							Console.writeOutput("I dont have that item.");
-						}
-						break;
-					}
-					case "get":
-					{
-						if (messageInfo == "item")
-						{
-							var getItemCommand:Command = new GetItemCommand();
-							if (!getItemCommand.execute(messageInfo, player))
-							{
-								Console.writeOutput("This room does not have an item.");
-							}
-						}
-						else 
-						{
-							Console.writeOutput("Get what?");
-						}
-						break;						
-					}
-					case ("inventory"):
-					{
-						Console.writeOutput("The items in your inventory are: " + player.getInventory() );
-						break;
-					}
-					case ("help"):
-					{
-						Console.writeOutput("The commands are: "+availableCommands.join(", "));
-						break;
-					}
-					default :
-					{
-						writeOutput("I don't know what you mean.");
-					}					
-				}
-				Console.writeOutput("");
+				}				
 			}           
         } 
 		

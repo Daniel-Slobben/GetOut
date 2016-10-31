@@ -1,4 +1,4 @@
-package 
+package Commands 
 {
 	/**
 	 * ...
@@ -9,7 +9,9 @@ package
 		
 		public function Command()
 		
-		function execute(info:String, actor:Character):Boolean
+		function execute(info:String, actor:Character):void
+		
+		function getName():String
 		
 	}
 

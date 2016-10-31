@@ -15,6 +15,7 @@ package
 		protected var health:int;
 		protected var map:Array;
 		protected var worldSize:Array;
+		protected var currentState:State;
 		
 		protected var items:Array = new Array();
 		
@@ -30,6 +31,7 @@ package
 			trace("Creating character!");
 			this.roomMap = roomMap;
 			this.worldSize = worldSize;
+			currentState = new worldState();
 			
 			health = maxHealth;		
 			
@@ -214,6 +216,11 @@ package
 				trace(output);
 				output = "";
 			}
+		}
+		
+		public function getCurrentState():State 
+		{
+			return currentState;
 		}
 		
 	}
