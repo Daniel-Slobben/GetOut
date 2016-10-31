@@ -63,8 +63,6 @@ package
 				arrayMessageInfo.removeAt(0);
 				var messageInfo:String = arrayMessageInfo.join(" ");
 				
-				var moved:Boolean = false;
-				
 				for each (var command:Command in player.getCurrentState().getCommands())
 				{
 					if (arrayMessage[0] == command.getName())

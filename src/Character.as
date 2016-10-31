@@ -159,6 +159,7 @@ package
 				if (this is Player) 
 				{
 					Console.writeOutput("Congratz, you won the game!")
+					currentState = new winState();
 				}		
 			}
 		}
