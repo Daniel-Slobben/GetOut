@@ -47,8 +47,20 @@ package
 		 */
 		public function addHealth(healthToAdd:int):void
 		{
-			health += healthToAdd;
-			Console.writeOutput("you now have " + health + " Health.");
+			if (health + healthToAdd > maxHealth)
+			{
+				health = maxHealth;
+			}
+			else 
+			{
+				health += healthToAdd;
+			}			
+			Console.writeOutput("You now have " + health + " Health.");
+			if (health < 0)
+			{
+				currentState = new lostState();
+				Console.writeOutput("You have lost the game.");
+			}
 		}
 		
 		/**
