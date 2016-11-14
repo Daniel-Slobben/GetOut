@@ -9,6 +9,7 @@ package
 		private var location:Array;
 		private var environment:String;
 		private var features:int;
+		private var occupied:Player;
 		
 		private var item:Item;
 		
@@ -72,6 +73,19 @@ package
 			return item;
 		}
 		
+		/**
+		 * function should get called when a player moves to this room
+		 * @param	player
+		 */
+		public function trigger(character:Character):void
+		{
+			// Trigger the poison first
+			character.addHealth(0 - poisonLevel);
+		}
+		
+		/**
+		 * Sets the poison level of this location
+		 */
 		private function setPoisonLevel():void
 		{
 			if (features > 19)
@@ -88,16 +102,14 @@ package
 			}
 		}
 		
-		/**
-		 * function should get called when a player moves to this room
-		 * @param	player
-		 */
-		public function trigger(player:Player):void
+		public function isOccupied():Player
 		{
-			// Trigger the poison first
-			player.addHealth(0 - poisonLevel);
+			return occupied;
+		}	
+		public function setOccupied(player:Player):void
+		{
+			occupied = player;
 		}
-		
 		public function getLocation():Array 
 		{
 			return location;

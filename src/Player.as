@@ -1,6 +1,7 @@
 package 
 {
 	import Commands.Command;
+	import States.*;
 	/**
 	 * ...
 	 * @author ...
@@ -14,6 +15,7 @@ package
 			location = [Math.ceil(worldSize[0] / 2), Math.ceil(worldSize[1] / 2)];
 			trace("character is at: " + location);
 			currentLocation = roomMap[location[0] + "_" + location[1]];
+			currentLocation.setOccupied(this);
 			var healthPack:HealthPack = new HealthPack();
 			healthPack.setOwner(this);
 			addItem(healthPack);
@@ -60,5 +62,29 @@ package
 			}
 			return commandString
 		}	
+		
+		/**
+		 * traces the location and the current room to the output
+		 */
+		public function traceLocation():void
+		{						
+			trace("Current location: " + location[0] + " " + location[1]);
+			if (currentLocation.checkItem())
+			{
+				Console.writeOutput("This room contains the item: " + currentLocation.getItem().getName());
+			}
+			Console.writeOutput("You are now in a " + currentLocation.getEnvironment());			
+			
+		}
+		
+		override public function checkHealth():void 
+		{
+			Console.writeOutput("You now have " + health + " Health.");
+			if (health < 1)
+			{				
+				currentState = new States.lostState();
+				Console.writeOutput("You have lost the game.");
+			}
+		}
 	}
 }

@@ -16,6 +16,11 @@ package Commands
 		
 		public function execute(direction:String, actor:Character):void
 		{
+			if (actor is Enemy)
+			{
+				actor.go(direction);
+				return;
+			}
 			if (!actor.go(direction))
 			{
 				Console.writeOutput("I don't know where to go.");

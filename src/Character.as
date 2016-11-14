@@ -15,9 +15,7 @@ package
 		protected const maxHealth:int = 100;
 		protected var currentLocation:Room;
 		protected var roomMap:Object;
-		protected var game:Game;
 		protected var health:int;
-		protected var map:Array;
 		protected var worldSize:Array;
 		protected var currentState:States.State;
 		
@@ -32,21 +30,15 @@ package
 		 */
 		public function Character(worldSize:Array, roomMap:Object) 
 		{
-			trace("Creating character!");
 			this.roomMap = roomMap;
 			this.worldSize = worldSize;
 			currentState = new States.worldState();
 			
 			health = maxHealth;		
-			
-			
-			
-			mapMaker(worldSize);
-			//traceMap(worldSize);
 		}
 		
 		/**
-		 * adds health to the player
+		 * adds health to the character
 		 * @param
 		 */
 		public function addHealth(healthToAdd:int):void
@@ -59,12 +51,7 @@ package
 			{
 				health += healthToAdd;
 			}			
-			Console.writeOutput("You now have " + health + " Health.");
-			if (health < 0)
-			{
-				currentState = new States.lostState();
-				Console.writeOutput("You have lost the game.");
-			}
+			checkHealth();
 		}
 		
 		/**
@@ -163,12 +150,18 @@ package
 		{
 			if (desiredLocation[0] > -1 && desiredLocation[0] < worldSize[0] && desiredLocation[1] > -1 && desiredLocation[1] < worldSize[1])
 			{
-				location = desiredLocation;
-				if (this is Player) 
+				if (this is Player)  
 				{
-					traceLocation();
-					currentLocation.trigger(Player(this));
-				}				
+					currentLocation.setOccupied(null);
+					(this as Player).traceLocation();					
+				}	
+				location = desiredLocation;
+				currentLocation = roomMap[location[0] + "_" + location[1]];
+				currentLocation.trigger(this);			
+				if (this is Player)  
+				{
+					currentLocation.setOccupied(this as Player);
+				}	
 			}
 			else
 			{
@@ -180,64 +173,17 @@ package
 			}
 		}
 		
-		/**
-		 * traces the location and the current room to the output
-		 */
-		private function traceLocation():void
-		{			
-			currentLocation = roomMap[location[0] + "_" + location[1]];
-			trace("Current location: " + location[0] + " " + location[1]);
-			if (currentLocation.checkItem())
-			{
-				Console.writeOutput("This room contains the item: " + currentLocation.getItem().getName());
-			}
-			Console.writeOutput("You are now in a " + currentLocation.getEnvironment());			
-			
-		}
-		
-		/**
-		 * makes an empty map. This method is also used in worldGenerator.
-		 * Should probably just make this a static method somewhere. 
-		 * @param	worldSize
-		 */
-		private function mapMaker(worldSize:Array):void 
-		{			
-			var i:int;
-			var j:int;
-			map = [];
-			for (i = 0; i < worldSize[0]; i++) 
-			{
-				map [i] = [];
-				for (j = 0; j < worldSize[1]; j++) 
-				{									
-					map [i][j] = false;
-				}
-			}
-			
-		}
-		/**
-		 * Traces the entire map of this character to the output
-		 * @param	worldSize
-		 */
-		public function traceMap(worldSize:Array):void
-		{
-			var i:int;
-			var j:int;
-			var output:String = "";
-			for (i = 0; i < worldSize[0]; i++) 
-			{
-				for (j = 0; j < worldSize[1]; j++) 
-				{									
-					output += map[i][j] + ", ";
-				}
-				trace(output);
-				output = "";
-			}
-		}
-		
 		public function getCurrentState():States.State 
 		{
 			return currentState;
+		}
+		
+		/**
+		 * This method should be overridden
+		 */
+		public function checkHealth():void
+		{
+			
 		}
 		
 	}
