@@ -42,7 +42,7 @@ package
 			initializeConsole();
 			trace("Done!");
 			
-			initializeEnemies(20);
+			initializeEnemies(15);
 			
 			Console.writeOutput("Tip: type 'Go North' to go north.");
 			Console.writeOutput("Tip: Walk back the way you came to avoid the poison damage!");

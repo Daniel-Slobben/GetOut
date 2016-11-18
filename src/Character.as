@@ -5,8 +5,7 @@ package
 	import States.winState;
 	import States.worldState;
 	/**
-	 * Please dont judge me on all the casting
-	 * I made the decision to split players and enemies way to late
+	 * TODO: Remove all the type casting in this class and use the subclasses more
 	 * All methods should work correctly with both players and enemies but a lot of it could be done way more efficiently
 	 * @author Daniël
 	 */
