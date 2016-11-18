@@ -17,7 +17,7 @@ package
         private static var outputField:TextField = new TextField();
         private var defaultString:String = "Input command"; 
 		private var defaultStringOutput:String = "Welcome!";
-		private var game:Game;
+		private var initializer:Initializer;
 		
 		private static var log:Array = new Array();
  
@@ -25,29 +25,22 @@ package
 		/**
 		 * this entire class needs to be better
 		 * sadly i am not too good with GUI stuff. 
-		 * @param	player
+		 * @param	player 
+		 * @param   initializer 
 		 */
-        public function Console(player:Player, game:Game) 
+        public function Console(player:Player, initializer:Initializer) 
         { 
-			this.game = game;
+			this.initializer = initializer;
 			this.player = player;
             captureText();
 			createOutputBox(defaultStringOutput);
-        } 
+        }
          
-        public function captureText():void 
-        { 
-            inputField.type = TextFieldType.INPUT; 
-			inputField.border = true;
-			inputField.borderColor = 0x000000;
-			inputField.width = 500;
-            inputField.background = false; 
-            addChild(inputField); 
-            inputField.text = defaultString;
-			
-			inputField.addEventListener(KeyboardEvent.KEY_DOWN, textInputCapture);
-        } 
-         
+		/**
+		 * gets triggered when the player presses enter
+		 * parses the input and sends the correct command
+		 * @param	event the keypress
+		 */
         public function textInputCapture(event:KeyboardEvent):void 
         { 
 			// if the key is ENTER
@@ -75,6 +68,10 @@ package
 			}           
         } 
 		
+		/**
+		 * writes a message to the output
+		 * @param	message
+		 */
 		public static function writeOutput(message:String):void
 		{
 			log.unshift(message);
@@ -85,6 +82,10 @@ package
 			outputField.text = output;
 		}
 		
+		/**
+		 * Creates the outputBox
+		 * @param	defaultStringOutput
+		 */
         public function createOutputBox(defaultStringOutput:String):void 
         { 
             outputField.background = true; 
@@ -96,6 +97,22 @@ package
 			outputField.multiline = true;
             addChild(outputField); 
             outputField.text = defaultStringOutput; 
+        } 
+		
+		/**
+		 * initializes the captureText field
+		 */
+        public function captureText():void 
+        { 
+            inputField.type = TextFieldType.INPUT; 
+			inputField.border = true;
+			inputField.borderColor = 0x000000;
+			inputField.width = 500;
+            inputField.background = false; 
+            addChild(inputField); 
+            inputField.text = defaultString;
+			
+			inputField.addEventListener(KeyboardEvent.KEY_DOWN, textInputCapture);
         } 
          
     } 

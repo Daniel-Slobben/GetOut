@@ -27,7 +27,7 @@ package Commands
 			}
 			else 
 			{
-				Game.moveEnemies();
+				Initializer.moveEnemies();
 			}
 		}
 		

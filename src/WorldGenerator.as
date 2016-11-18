@@ -19,15 +19,12 @@ package
 		public function WorldGenerator(worldSize:Array) 
 		{
 			roomMap = new Object();
-			this.worldSize = worldSize;
-			
+			this.worldSize = worldSize;			
 		}
 		
 		/**
-		 * 
-		 * @param	worldSize
+		 * The function for generating the world
 		 */
-		
 		public function generate():void 
 		{
 			trace("I am in the world generation now!");
@@ -36,36 +33,30 @@ package
 				trace("Loading: " + i);
 				for (var j:int = 0; j < worldSize[1]; j++) 
 				{
-					var features:int = countAliveNeighbours(i, j, -2);
+					var dangerLevel:int = countAliveNeighbours(i, j, -2);
 					var locationArray:Array = [i, j];
 					if (map[i][j])
 					{
-						roomMap[i + "_" + j] = new Room(locationArray, "Desert", features);	
+						roomMap[i + "_" + j] = new Room(locationArray, "Desert", dangerLevel);	
 					}
 					else 
 					{
-						roomMap[i + "_" + j] = new Room(locationArray, "Forest", features);	
-					}
-					
+						roomMap[i + "_" + j] = new Room(locationArray, "Forest", dangerLevel);	
+					}					
 				}
 			}
 		}
 		
-		public function getRoomMap():Object 
-		{
-			return roomMap;
-		}
-		
+		/**
+		 * Creates the base map used for cellular automation
+		 */
 		public function createBaseMap():void 
-		{						
-			var i:int;
-			var j:int;
-			
+		{			
 			map = [];
-			for (i = 0; i < worldSize[0]; i++) 
+			for (var i:int = 0; i < worldSize[0]; i++) 
 			{
 				map [i] = [];
-				for (j = 0; j < worldSize[1]; j++) 
+				for (var j:int = 0; j < worldSize[1]; j++) 
 				{							
 					var randomNumber:Number = Math.random();
 					if (randomNumber > chanceOfLife)
@@ -80,65 +71,69 @@ package
 			}			
 		}
 		
-		public function simulateStep():void
+		/**
+		 * Simulates the steps for cellular automation
+		 * @param	amountOfSteps How many steps you want to take
+		 */
+		public function simulate(amountOfSteps:int):void
 		{
-			var newMap:Array = createEmptyMap();
-			for (var i:int = 0; i < worldSize[0]; i++) 
+			for (var count:int = 0; count < amountOfSteps; count++ )
 			{
-				for (var j:int = 0; j < worldSize[1]; j++) 
-				{	
-					var aliveNeighbours:int = countAliveNeighbours(i, j, -1);
-					
-					// rules for alive cells
-					if (map[i][j])
-					{
-						if (aliveNeighbours < deathLimit)
+				var newMap:Array = createEmptyMap();
+				for (var i:int = 0; i < worldSize[0]; i++) 
+				{
+					for (var j:int = 0; j < worldSize[1]; j++) 
+					{	
+						var aliveNeighbours:int = countAliveNeighbours(i, j, -1);
+						
+						// rules for alive cells
+						if (map[i][j])
 						{
-							newMap[i][j] = false;
+							if (aliveNeighbours < deathLimit)
+							{
+								newMap[i][j] = false;
+							}
+							else
+							{
+								newMap[i][j] = true;
+							}
 						}
+						// rules for dead cells
 						else
 						{
-							newMap[i][j] = true;
-						}
-					}
-					// rules for dead cells
-					else
-					{
-						if (aliveNeighbours > birthLimit)
-						{
-							newMap[i][j] = true;
-						}
-						else
-						{
-							newMap[i][j] = false;
+							if (aliveNeighbours > birthLimit)
+							{
+								newMap[i][j] = true;
+							}
+							else
+							{
+								newMap[i][j] = false;
+							}
 						}
 					}
 				}
+				map = newMap;
 			}
-			map = newMap;
 		}
+		
 		/**
-		 * Thanks to gamedevelopment.tutsplus.com
-		 * for this elegant solution.
-		 * The reason this for loop starts at -1 for the direct neighbours
-		 * is so that you can do things like
-		 * {x + j, y} to easily get the coordinates
-		 * of neighboor cells
+		 * Function for counting the amount of alive neighbours a coordinate has.
 		 * @param	x coordinates of the cell we want to check
 		 * @param	y coordinates of the cell we want to check
-		 * @return The amount of alive cells next to it
+		 * @param	size The higher this number is the more neighbours we have to check
+		 * @return  The amount of alive cells in the area we check
 		 */
-		private function countAliveNeighbours(x:int, y:int, loopStart:int):int
+		private function countAliveNeighbours(x:int, y:int, size:int):int
 		{
 			var count:int = 0;
-			for (var i:int = loopStart; i < Math.abs(loopStart)+1; i++)
+			for (var i:int = size; i < Math.abs(size)+1; i++)
 			{
-				for (var j:int = loopStart; j < Math.abs(loopStart)+1; j++)
+				for (var j:int = size; j < Math.abs(size)+1; j++)
 				{
-					var neighbour_x:int = x + i;
-					var neighbour_y:int = y + j;
-					
 					// this is the cell we want to check
+					var neighbour_x:int = x + i;
+					var neighbour_y:int = y + j;					
+					
 					if (i == 0 && j == 0)
 					{
 						// nothing
@@ -157,6 +152,9 @@ package
 			return count;
 		}
 		
+		/**
+		 * Traces the map with the dangerlevels
+		 */
 		public function traceFeatureMap():void
 		{
 			var output:String = "";
@@ -164,21 +162,23 @@ package
 			{
 				for (var j:int = 0; j < worldSize[1]; j++) 
 				{
-					if (roomMap[i + "_" + j].getFeatures() > 9)
+					if (roomMap[i + "_" + j].getDangerLevels() > 9)
 					{
-						output += " " + roomMap[i + "_" + j].getFeatures();
+						output += " " + roomMap[i + "_" + j].getDangerLevels();
 					}
 					else 
 					{
-						output += " " + roomMap[i + "_" + j].getFeatures()+" ";
+						output += " " + roomMap[i + "_" + j].getDangerLevels()+" ";
 					}
 				}
 				trace(output);
 				output = "";
 			}
-			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0, -1));
 		}
 		
+		/**
+		 * Traces the false/true map
+		 */
 		public function traceMap():void
 		{
 			var i:int;
@@ -201,7 +201,13 @@ package
 				output = "";
 			}
 			trace("Number of alive neighbours for location 0, 0: " + countAliveNeighbours(0, 0, -1));
+		}		
+		
+		public function getRoomMap():Object 
+		{
+			return roomMap;
 		}
+		
 		/**
 		 * ActionScript doesnt let me do boolean[][]
 		 * So i created a function to do it for me;

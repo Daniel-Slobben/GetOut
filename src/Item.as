@@ -1,7 +1,7 @@
 package 
 {
 	/**
-	 * ...
+	 * This class isnt really getting much use but can be usefull if more items are added to the game
 	 * @author ...
 	 */
 	public class Item 

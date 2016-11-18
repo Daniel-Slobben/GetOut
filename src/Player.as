@@ -3,12 +3,19 @@ package
 	import Commands.Command;
 	import States.*;
 	/**
-	 * ...
+	 * The player class
+	 * 
 	 * @author ...
 	 */
 	public class Player extends Character 
 	{
-		
+		/**
+		 * The constructor. 
+		 * gives the player a location 
+		 * gives the player a health pack
+		 * @param	worldSize
+		 * @param	roomMap
+		 */
 		public function Player(worldSize:Array, roomMap:Object) 
 		{
 			super(worldSize, roomMap);
@@ -21,6 +28,10 @@ package
 			addItem(healthPack);
 		}
 		
+		/**
+		 * Makes a string of the inventory
+		 * @return the inventory
+		 */
 		public function getInventory():String
 		{
 			var itemString:String = "";
@@ -42,6 +53,10 @@ package
 			return itemString;
 		}
 		
+		/**
+		 * return a string with all currently available commands
+		 * @return
+		 */
 		public function getHelp():String
 		{
 			var commandArray:Array = currentState.getCommands();
@@ -83,6 +98,7 @@ package
 			if (health < 1)
 			{				
 				currentState = new States.lostState();
+				Console.writeOutput("Please check your statistics by writing 'stats'. ");
 				Console.writeOutput("You have lost the game.");
 			}
 		}

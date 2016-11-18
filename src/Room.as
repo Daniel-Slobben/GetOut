@@ -1,25 +1,26 @@
 package 
 {
 	/**
-	 * ...
+	 * the room class
+	 * is a location in the game
 	 * @author Daniël
 	 */
 	public class Room 
 	{
 		private var location:Array;
 		private var environment:String;
-		private var features:int;
+		private var dangerLevel:int;
 		private var occupied:Player;
 		
 		private var item:Item;
 		
 		private var poisonLevel:int = 0;
 		
-		public function Room(location:Array, environment:String, features:int) 
+		public function Room(location:Array, environment:String, dangerLevel:int) 
 		{
 			this.location = location;
 			this.environment = environment;
-			this.features = features;
+			this.dangerLevel = dangerLevel;
 			
 			createFeatures();
 		}
@@ -36,11 +37,9 @@ package
 		 */
 		public function setItems():void 
 		{			
-			if (features < 10)
+			if (dangerLevel < 10)
 			{
-				var chance:Number = features;
-				// ex: if features = 4, chance = 0.7
-				// ex: if features = 8, chance = 0.3
+				var chance:Number = dangerLevel;
 				chance = 1 - ((chance / 10) - 0.1);
 				
 				if (Math.random() < chance)
@@ -51,6 +50,10 @@ package
 			}			
 		}
 		
+		/**
+		 * checks if this room has an item
+		 * @return returns true or false
+		 */
 		public function checkItem():Boolean
 		{
 			if (item != null)
@@ -60,6 +63,9 @@ package
 			return false;
 		}
 		
+		/**
+		 * removes the item in this room 
+		 */
 		public function removeItem():void
 		{
 			if (item != null)
@@ -68,6 +74,10 @@ package
 			}
 		}
 		
+		/**
+		 * return the item
+		 * @return the item
+		 */
 		public function getItem():Item
 		{
 			return item;
@@ -88,15 +98,15 @@ package
 		 */
 		private function setPoisonLevel():void
 		{
-			if (features > 19)
+			if (dangerLevel > 19)
 			{
 				poisonLevel = Math.floor(Math.random() * 70);
 			}
-			else if (features > 14)
+			else if (dangerLevel > 14)
 			{
 				poisonLevel = Math.floor(Math.random() * 30);
 			}
-			else if (features > 7)
+			else if (dangerLevel > 7)
 			{
 				poisonLevel = Math.floor(Math.random() * 10);
 			}
@@ -118,9 +128,13 @@ package
 		{
 			return environment;
 		}
-		public function getFeatures():int
+		public function getDangerLevels():int
 		{
-			return features;
+			return dangerLevel;
+		}
+		public function nullifyPoison():void
+		{
+			poisonLevel  = 0;
 		}
 		
 	}

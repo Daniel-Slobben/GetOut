@@ -1,5 +1,6 @@
 package States 
 {
+	import Commands.helpCommand;
 	import Commands.statCommand;
 	import States.State;
 	/**
@@ -8,7 +9,7 @@ package States
 	 */
 	public class winState implements States.State 
 	{
-		private var availableCommands:Array = [new statCommand()]
+		private var availableCommands:Array = [new statCommand(), new helpCommand()]
 		
 		public function winState() 
 		{

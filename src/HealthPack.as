@@ -1,8 +1,9 @@
 package 
 {
 	/**
-	 * ...
-	 * @author ...
+	 * The health pack class
+	 * A health pack has an owner and can add health to that owner.
+	 * @author Slobben
 	 */
 	public class HealthPack extends Item 
 	{

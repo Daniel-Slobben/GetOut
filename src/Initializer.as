@@ -2,10 +2,10 @@ package
 {
 	
 	/**
-	 * textgame
+	 * Initialize this textgame already
 	 * @author Daniël
 	 */
-	public class Game 
+	public class Initializer 
 	{
 		
 		private var console:Console;
@@ -21,7 +21,7 @@ package
 		/**
 		 * Empty constructor
 		 */
-		public function Game() 
+		public function Initializer() 
 		{
 			
 		}
@@ -44,12 +44,18 @@ package
 			
 			initializeEnemies();
 			
+			Console.writeOutput("Tip: type 'Go North' to go north.");
+			Console.writeOutput("Tip: Walk back the way you came to avoid the poison damage!");
+			Console.writeOutput("The specific commands that are available can change depending on the status of your game.");
+			Console.writeOutput("Please type 'help' in the box above to see what commands are available!");
 			Console.writeOutput("Reach to end of the map to win.");
 			Console.writeOutput("Welcome to GetOut!");
-			Console.writeOutput("");
 			
 		}
 		
+		/**
+		 * Triggers an enemy to do their moves
+		 */		
 		public static function moveEnemies():void
 		{
 			for each (var enemy:Enemy in enemies)
@@ -58,6 +64,9 @@ package
 			}
 		}
 		
+		/**
+		 * Initializes the enemies
+		 */
 		private function initializeEnemies():void 
 		{
 			
@@ -68,37 +77,43 @@ package
 			enemies = [enemy1, enemy2, enemy3];			
 		}
 		
+		/**
+		 * Initializes the console
+		 */
 		private function initializeConsole():void 
 		{
 			console = new Console(player, this);
 			Main.stage.addChild(console);
 		}
 		
+		/**
+		 * Initializes the player
+		 */
 		private function initializeCharacter():void 
 		{
 			player = new Player(worldSize, roomMap);
 		}
 		
 		/**
-		 * Method for initializing the game world
-		 * Some responsibilities of this method could/should
-		 * be handed over to worldGenerator.as
+		 * Initializes the gameworld with a worldsize of 20 20
+		 * This is not dynamic because i am lazy
 		 */
 		private function initializeWorld():void 
 		{						
 			worldSize = [20, 20];
 			worldGenerator = new WorldGenerator(worldSize);
 			roomMap = worldGenerator.getRoomMap();
+			
+			// the methods for cellular automation
 			worldGenerator.createBaseMap();
-			for (var i:int = 0; i < 10; i++ )
-			{
-				worldGenerator.simulateStep();
-			}			
+			worldGenerator.simulate(10);
+			
+			// the methods for actual room generation
 			worldGenerator.generate();
+			
+			// tracing the maps
 			worldGenerator.traceMap();
 			worldGenerator.traceFeatureMap();
-		}
-		
+		}		
 	}
-
 }

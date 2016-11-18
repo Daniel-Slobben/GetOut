@@ -5,7 +5,9 @@ package
 	import States.winState;
 	import States.worldState;
 	/**
-	 * ...
+	 * Please dont judge me on all the casting
+	 * I made the decision to split players and enemies way to late
+	 * All methods should work correctly with both players and enemies but a lot of it could be done way more efficiently
 	 * @author Daniël
 	 */
 	public class Character 
@@ -23,8 +25,7 @@ package
 		
 		/**
 		 * Constructor for the character superclass.
-		 * some of these functions still need to be handed over
-		 * to the subclasses
+		 * some of these functions like initializing health should be handed over to the subclasses		 * 
 		 * @param	worldSize
 		 * @param	roomMap
 		 */
@@ -38,8 +39,9 @@ package
 		}
 		
 		/**
-		 * adds health to the character
-		 * @param
+		 * Adds health to the character
+		 * cant be over the max health and if it reaches below 0 and if the character is a player its game over
+		 * @param the amount of health we want to add
 		 */
 		public function addHealth(healthToAdd:int):void
 		{
@@ -72,6 +74,10 @@ package
 			return false;
 		}
 		
+		/**
+		 * Checks if an item exist in the current room and adds it to the inventory
+		 * @return
+		 */
 		public function getItem():Boolean
 		{
 			var item:Item = currentLocation.getItem();
@@ -87,7 +93,7 @@ package
 		}
 		
 		/**
-		 * add Item to the list
+		 * add Item to the inventory
 		 * @param	item to add;
 		 */
 		public function addItem(itemToAdd:Item):void
@@ -96,7 +102,7 @@ package
 		}
 		
 		/**
-		 * remove item from items
+		 * remove item from the inventory
 		 * @param	item to delete
 		 */
 		public function deleteItem(itemToDelete:Item):void
@@ -161,13 +167,15 @@ package
 				if (this is Player)  
 				{
 					currentLocation.setOccupied(this as Player);
+					currentLocation.nullifyPoison();
 				}	
 			}
 			else
 			{
 				if (this is Player) 
 				{
-					Console.writeOutput("Congratz, you won the game!")
+					Console.writeOutput("Please check your statistics by writing 'stats'. ");
+					Console.writeOutput("Congratz, you have won the game!");
 					currentState = new States.winState();
 				}		
 			}
@@ -180,6 +188,7 @@ package
 		
 		/**
 		 * This method should be overridden
+		 * Can i force this in action script?
 		 */
 		public function checkHealth():void
 		{
