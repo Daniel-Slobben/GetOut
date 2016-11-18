@@ -42,7 +42,7 @@ package
 			initializeConsole();
 			trace("Done!");
 			
-			initializeEnemies();
+			initializeEnemies(20);
 			
 			Console.writeOutput("Tip: type 'Go North' to go north.");
 			Console.writeOutput("Tip: Walk back the way you came to avoid the poison damage!");
@@ -57,7 +57,7 @@ package
 		 * Triggers an enemy to do their moves
 		 */		
 		public static function moveEnemies():void
-		{
+		{			
 			for each (var enemy:Enemy in enemies)
 			{
 				enemy.action();
@@ -67,14 +67,13 @@ package
 		/**
 		 * Initializes the enemies
 		 */
-		private function initializeEnemies():void 
+		private function initializeEnemies(amountOfEnemies:int):void 
 		{
-			
-			var enemy1:Enemy = new Enemy(worldSize, roomMap);
-			var enemy2:Enemy = new Enemy(worldSize, roomMap);
-			var enemy3:Enemy = new Enemy(worldSize, roomMap);
-			
-			enemies = [enemy1, enemy2, enemy3];			
+			enemies = new Array();
+			for (var count:int = 0; count < amountOfEnemies; count++ )
+			{
+				enemies.push(new Enemy(worldSize, roomMap));			
+			}	
 		}
 		
 		/**

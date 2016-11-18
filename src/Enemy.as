@@ -92,7 +92,7 @@ package
 			{
 				direction = "west";
 			}
-			command.execute("north", this);			
+			command.execute(direction, this);			
 		}
 		
 		override public function checkHealth():void 
